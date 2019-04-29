@@ -3,7 +3,6 @@ from abc import ABC, abstractmethod
 
 class BaseQuery(ABC):
     name = 'base'
-    _query_buffer = []
 
     def __init__(self):
         self._query_buffer = []
@@ -17,6 +16,11 @@ class BaseQuery(ABC):
 
 
 class Filter(BaseQuery):
+    """
+    Конструктор фильтров
+
+    https://online.moysklad.ru/api/remap/1.1/doc/index.html#header-%D1%84%D0%B8%D0%BB%D1%8C%D1%82%D1%80%D0%B0%D1%86%D0%B8%D1%8F-%D0%B2%D1%8B%D0%B1%D0%BE%D1%80%D0%BA%D0%B8-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D0%B0-filter
+    """
     name = 'filter'
 
     def eq(self, field, value):
@@ -75,6 +79,11 @@ class Filter(BaseQuery):
 
 
 class Search(BaseQuery):
+    """
+    Контекстный поиск
+
+    https://online.moysklad.ru/api/remap/1.1/doc/index.html#header-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BD%D1%8B%D0%B9-%D0%BF%D0%BE%D0%B8%D1%81%D0%BA
+    """
     name = 'search'
 
     def __init__(self, query):
@@ -86,6 +95,11 @@ class Search(BaseQuery):
 
 
 class Ordering(BaseQuery):
+    """
+    Сортировка объектов
+
+    https://online.moysklad.ru/api/remap/1.1/doc/index.html#header-%D1%81%D0%BE%D1%80%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%BA%D0%B0-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%BE%D0%B2
+    """
     name = 'order'
 
     def asc(self, field):
@@ -101,6 +115,11 @@ class Ordering(BaseQuery):
 
 
 class Expand(BaseQuery):
+    """
+    Раскрытие вложенных сущностей
+
+    https://online.moysklad.ru/api/remap/1.1/doc/index.html#%D0%BE%D0%B1%D1%89%D0%B8%D0%B5-%D1%81%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D1%8F-%D0%B7%D0%B0%D0%BC%D0%B5%D0%BD%D0%B0-%D1%81%D1%81%D1%8B%D0%BB%D0%BE%D0%BA-%D0%BE%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D0%B0%D0%BC%D0%B8-%D1%81-%D0%BF%D0%BE%D0%BC%D0%BE%D1%89%D1%8C%D1%8E-expand
+    """
     name = 'expand'
 
     def __init__(self, *args):

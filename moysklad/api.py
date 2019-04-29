@@ -3,7 +3,8 @@ from __future__ import annotations
 from typing import Dict, Optional
 from zlib import crc32
 
-from moysklad.components.http.client import MoySkladHttpClient
+from moysklad.http import MoySkladHttpClient
+from moysklad.url import ApiUrlRegistry
 
 
 class MoySklad:
@@ -12,6 +13,7 @@ class MoySklad:
     def __init__(self, login: str, password: str, pos_token: str,
                  hash_code: str) -> None:
         self._client = MoySkladHttpClient(login, password, pos_token)
+        self._methods = ApiUrlRegistry()
         self._hash_code = hash_code
 
     @classmethod
@@ -37,6 +39,9 @@ class MoySklad:
 
     def get_client(self) -> MoySkladHttpClient:
         return self._client
+
+    def get_methods(self) -> ApiUrlRegistry:
+        return self._methods
 
     def set_pos_token(self, pos_token) -> None:
         self._client.set_pos_token(pos_token)

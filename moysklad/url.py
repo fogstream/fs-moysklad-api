@@ -25,13 +25,13 @@ class ApiUrlRegistry(AbstractSingleton):
         return (f'{self.get_list_url(entity_name)}/'
                 f'{entity_id}/{relation_entity_name}')
 
-    # @staticmethod
-    # def get_report_url(report_name):
-    #     return f'{AbstractReport.entity_name}/{report_name}'
-    #
-    # @staticmethod
-    # def get_report_with_param_url(report_name, param):
-    #     return f'{AbstractReport.entity_name}/{report_name}/{param}'
+    @staticmethod
+    def get_report_url(report_name):
+        return f'report/{report_name}'
+
+    @staticmethod
+    def get_report_with_param_url(report_name, param):
+        return f'report/{report_name}/{param}'
 
     @staticmethod
     def get_metadata_url(entity_name):

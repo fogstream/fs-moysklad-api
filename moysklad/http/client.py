@@ -5,15 +5,16 @@ from urllib.parse import urljoin
 
 from requests import Request, RequestException, Session
 
-from moysklad.components.http.options import RequestConfig
-from moysklad.components.queries import BaseQuery, Pagination
 from moysklad.exceptions import (
     ApiResponseException,
     PosTokenException,
     RequestFailedException,
     ResponseParseException,
 )
+from moysklad.queries import BaseQuery, Pagination
 from moysklad.utils import get_auth_hash
+
+from .options import RequestConfig
 
 
 class HTTPMethod(Enum):

@@ -9,7 +9,26 @@ TIME_STRING = '%Y-%m-%d %H:%M:%S'
 MS_MATCH = re.compile(r'\.[\d]{3}')
 
 
+class SingletonABCMeta(ABCMeta):
+    _instance = None
+
+    def __call__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(SingletonABCMeta, cls).__call__(*args, **kwargs)
+        return cls._instance
+
+
+class AbstractSingleton(metaclass=SingletonABCMeta):
+    pass
+
+
 def get_auth_hash(login: str, password: str) -> str:
+    """
+    Метод предназначен для получения base64 строки для Basic Auth
+    :param login: Логин
+    :param password: Пароль
+    :return: Закодированная пара логин:пароль
+    """
     return b64encode(f'{login}:{password}'.encode()).decode('utf-8')
 
 
@@ -27,16 +46,3 @@ def parse_time_string(time_string: str) -> datetime:
     else:
         date = datetime.strptime(time_string, TIME_STRING)
     return date
-
-
-class SingletonABCMeta(ABCMeta):
-    _instance = None
-
-    def __call__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super(SingletonABCMeta, cls).__call__(*args, **kwargs)
-        return cls._instance
-
-
-class AbstractSingleton(metaclass=SingletonABCMeta):
-    pass
