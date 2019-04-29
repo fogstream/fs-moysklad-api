@@ -5,15 +5,14 @@ from urllib.parse import urljoin
 
 from requests import Request, RequestException, Session
 
-from moysklad.exceptions import (
+from ..exceptions import (
     ApiResponseException,
     PosTokenException,
     RequestFailedException,
     ResponseParseException,
 )
-from moysklad.queries import BaseQuery, Pagination
-from moysklad.utils import get_auth_hash
-
+from ..queries import BaseQuery, Pagination
+from ..utils import get_auth_hash
 from .options import RequestConfig
 
 

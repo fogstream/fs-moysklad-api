@@ -1,4 +1,4 @@
-from moysklad.utils import AbstractSingleton
+from .utils import AbstractSingleton
 
 
 class ApiUrlRegistry(AbstractSingleton):

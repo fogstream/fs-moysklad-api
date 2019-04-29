@@ -3,8 +3,8 @@ from __future__ import annotations
 from typing import Dict, Optional
 from zlib import crc32
 
-from moysklad.http import MoySkladHttpClient
-from moysklad.url import ApiUrlRegistry
+from .http import MoySkladHttpClient
+from .urls import ApiUrlRegistry
 
 
 class MoySklad:
