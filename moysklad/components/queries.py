@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class BaseFilter(ABC):
+class BaseQuery(ABC):
     name = 'base'
     _query_buffer = []
 
@@ -16,7 +16,7 @@ class BaseFilter(ABC):
         return self._query_buffer
 
 
-class FilterQuery(BaseFilter):
+class Filter(BaseQuery):
     name = 'filter'
 
     def eq(self, field, value):
@@ -74,7 +74,7 @@ class FilterQuery(BaseFilter):
         return ';'.join(self._query_buffer)
 
 
-class Search(BaseFilter):
+class Search(BaseQuery):
     name = 'search'
 
     def __init__(self, query):
@@ -85,7 +85,7 @@ class Search(BaseFilter):
         return self._query_buffer[0]
 
 
-class Ordering(BaseFilter):
+class Ordering(BaseQuery):
     name = 'order'
 
     def asc(self, field):
@@ -100,7 +100,7 @@ class Ordering(BaseFilter):
         return ';'.join(self._query_buffer)
 
 
-class Expand(BaseFilter):
+class Expand(BaseQuery):
     name = 'expand'
 
     def __init__(self, *args):

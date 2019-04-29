@@ -1,4 +1,4 @@
-from requests import Request, Response
+from requests import Response
 
 
 class PosTokenException(Exception):
@@ -6,9 +6,9 @@ class PosTokenException(Exception):
 
 
 class RequestFailedException(Exception):
-    def __init__(self, request: Request, response: Response, *args) -> None:
-        super().__init__(*args)
-        self._request = request
+    def __init__(self, response: Response) -> None:
+        super().__init__()
+        self._request = response.request
         self._response = response
 
     def __str__(self):
@@ -31,8 +31,8 @@ class EntityHasNoIdException(Exception):
 
 
 class ApiResponseException(RequestFailedException):
-    def __init__(self, request: Request, response: Response, errors) -> None:
-        super().__init__(request, response)
+    def __init__(self, response: Response, errors) -> None:
+        super().__init__(response)
         error = errors[0]
         self._code = error.get('code')
         self._error_text = error.get('error')
