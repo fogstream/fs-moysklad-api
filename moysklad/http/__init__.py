@@ -1,2 +1,2 @@
 from .client import MoySkladHttpClient
-from .options import RequestConfig
+from .utils import RequestConfig

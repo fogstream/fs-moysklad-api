@@ -17,7 +17,7 @@ VERSION = None
 REQUIRED = ['requests', ]
 
 EXTRAS = {
-
+    'proxy': ['PySocks']
 }
 
 # ------------------------------------------------

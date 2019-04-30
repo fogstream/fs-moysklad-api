@@ -1,33 +1,33 @@
+from json import JSONDecodeError
+
 from requests import Response
 
 
 class PosTokenException(Exception):
-    pass
+    def __str__(self) -> str:
+        return 'POS token is used, but it\'s invalid or empty'
 
 
 class RequestFailedException(Exception):
     def __init__(self, response: Response) -> None:
         super().__init__()
-        self._request = response.request
-        self._response = response
+        self.request = response.request
+        self.response = response
 
     def __str__(self):
-        res = self.get_response()
+        res = self.response
         return f'RequestError [{res.status_code}]: {res.text}'
-
-    def get_request(self):
-        return self._request
-
-    def get_response(self):
-        return self._response
 
 
 class ResponseParseException(Exception):
-    pass
 
+    def __init__(self, exc: JSONDecodeError, response: Response) -> None:
+        super().__init__(exc)
+        self.message = exc
+        self.response = response
 
-class EntityHasNoIdException(Exception):
-    pass
+    def __str__(self):
+        return f'Response decode error: {self.message}'
 
 
 class ApiResponseException(RequestFailedException):
