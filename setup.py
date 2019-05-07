@@ -6,7 +6,7 @@ import sys
 from setuptools import Command, find_packages, setup
 
 # Package meta-data.
-NAME = 'fs-moysklad'
+NAME = 'fs-moysklad-api'
 DESCRIPTION = 'MoySklad API wrapper'
 URL = 'https://github.com/fogstream/fs-moysklad'
 EMAIL = 'fadeddexofan@gmail.com'
@@ -103,7 +103,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: Implementation :: CPython',
     ],
-    keywords=['moysklad', 'api', 'fs-moysklad', 'sdk', 'integration', 'fogstream', ],
+    keywords=['moysklad', 'api', 'fs-moysklad-api', 'sdk', 'integration', 'fogstream', 'lib'],
     zip_safe=False,
     cmdclass={
         'upload': UploadCommand,

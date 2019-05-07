@@ -6,6 +6,9 @@ verify_ssl = true
 [dev-packages]
 isort = "*"
 pylint = "*"
+wheel = "*"
+twine = "*"
+setuptools = "*"
 
 [packages]
 requests = "*"

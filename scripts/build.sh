@@ -37,10 +37,10 @@ if [[ "$matched_files" -gt "0" ]]; then
 fi
 
 echo "..... Trying to verify that all source files are present"
-# remove cdek/*.egg-info/ generated during build
+# remove moysklad/*.egg-info/ generated during build
 find . -type d -name '*.egg-info' | xargs rm -rf
 
-source_files=`find ./cdek/ -type f | sed 's|./||'`
+source_files=`find ./moysklad/ -type f | sed 's|./||'`
 
 # verify for .tar.gz package
 package_files=`tar -tvf dist/*.tar.gz`
@@ -62,20 +62,17 @@ for src_file in ${source_files}; do
     fi
 done
 
-# exit on error from now on
-set -e
-
 echo "..... Trying to install the new tarball inside a virtualenv"
 virtualenv .venv/test-tarball
 source .venv/test-tarball/bin/activate
-pip install --no-binary :all: -f dist/ fs-cdek-api
+pip install --no-binary :all: -f dist/ fs-moysklad-api
 deactivate
 rm -rf .venv/
 
 echo "..... Trying to install the new wheel inside a virtualenv"
 virtualenv .venv/test-wheel
 source .venv/test-wheel/bin/activate
-pip install --only-binary :all: -f dist/ fs-cdek-api
+pip install --only-binary :all: -f dist/ fs-moysklad-api
 deactivate
 rm -rf .venv/
 

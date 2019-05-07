@@ -1,2 +1,2 @@
 #!/bin/bash
-pytest --cov=cdek -v tests/
+pytest --cov=moysklad -v tests/
