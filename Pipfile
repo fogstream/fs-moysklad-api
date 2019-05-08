@@ -12,6 +12,7 @@ setuptools = "*"
 
 [packages]
 requests = "*"
+PySocks = "*"
 
 [requires]
 python_version = "3.7"

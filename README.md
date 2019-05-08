@@ -1,6 +1,8 @@
 MoySklad
 ===========
 
+[![PyPI Version](https://img.shields.io/pypi/v/fs-moysklad-api.svg)](https://pypi.python.org/pypi/fs-moysklad-api)
+
 Описание
 ------------
 Библиотека упрощающая работу с API [МойСклад](https://www.moysklad.ru/).

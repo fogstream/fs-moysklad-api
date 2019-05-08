@@ -1,1 +1,1 @@
-from .api import MoySklad
+from .api import MoySklad  # noqa F401
