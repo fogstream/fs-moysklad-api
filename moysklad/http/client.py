@@ -114,12 +114,13 @@ class MoySkladHttpClient:
         if options.debug_rate_limit:
             headers.update(DEBUG_RATE_HEADERS)
 
+        query = kwargs.get('query') or Query()
         request_payload = {
             'method': http_method.value,
             'url': urljoin(endpoint, api_method),
             'headers': headers,
             'auth': auth,
-            'params': kwargs.get('query', Query()).url_params,
+            'params': query.url_params,
         }
 
         if not options.ignore_request_body:

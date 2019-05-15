@@ -1,5 +1,7 @@
 from enum import Enum
 
+from requests import Response
+
 
 DEBUG_RATE_HEADERS = {
     'X-RateLimit-Limit': 'true',
@@ -18,10 +20,11 @@ class HTTPMethod(Enum):
 
 
 class ApiResponse:
-    def __init__(self, response, json_response) -> None:
-        self.context = json_response['context']
-        self.meta = json_response['meta']
-        self.rows = json_response['rows']
+    def __init__(self, response: Response, json_response: dict) -> None:
+        self.data = json_response
+        self.context = json_response.get('context')
+        self.meta = json_response.get('meta')
+        self.rows = json_response.get('rows')
         self.response = response
         self.headers = response.headers
 
