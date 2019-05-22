@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Optional
 from zlib import crc32
 
 from .http import MoySkladHttpClient
@@ -8,7 +8,7 @@ from .urls import ApiUrlRegistry
 
 
 class MoySklad:
-    _instances: Dict = {}
+    _instances: dict = {}
 
     def __init__(self, login: str, password: str, pos_token: str,
                  hash_code: str) -> None:

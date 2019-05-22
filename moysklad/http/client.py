@@ -1,6 +1,6 @@
 from json import JSONDecodeError
 from time import sleep
-from typing import Dict, Optional
+from typing import Optional, Union
 from urllib.parse import urljoin
 
 from requests import Request, RequestException, Session
@@ -39,7 +39,7 @@ class MoySkladHttpClient:
         self._pos_token = pos_token
 
     def get(self, method: str,
-            data: Dict = None,
+            data: Union[dict, list] = None,
             query: Optional[Query] = None,
             options: Optional[RequestConfig] = None):
         return self._make_request(
@@ -51,7 +51,7 @@ class MoySkladHttpClient:
         )
 
     def post(self, method: str,
-             data: Dict = None,
+             data: Union[dict, list] = None,
              query: Optional[Query] = None,
              options: Optional[RequestConfig] = None):
         return self._make_request(
@@ -63,7 +63,7 @@ class MoySkladHttpClient:
         )
 
     def put(self, method: str,
-            data: Dict = None,
+            data: Union[dict, list] = None,
             query: Optional[Query] = None,
             options: Optional[RequestConfig] = None):
         return self._make_request(
@@ -75,7 +75,7 @@ class MoySkladHttpClient:
         )
 
     def delete(self, method: str,
-               data: Dict = None,
+               data: Union[dict, list] = None,
                query: Optional[Query] = None,
                options: Optional[RequestConfig] = None):
         return self._make_request(
@@ -89,13 +89,17 @@ class MoySkladHttpClient:
     def set_pre_request_timeout(self, ms: float) -> None:
         self._pre_request_sleep_time = ms
 
-    def set_proxies(self, proxies: Optional[Dict]):
+    def set_proxies(self, proxies: Optional[dict]):
         self._proxies = proxies
 
     # pylint: disable-msg=too-many-locals
-    def _make_request(self, http_method: HTTPMethod, api_method: str,
-                      data=None, options: Optional[RequestConfig] = None,
-                      **kwargs):
+    def _make_request(
+            self, http_method: HTTPMethod,
+            api_method: str,
+            data: Optional[Union[dict, list]] = None,
+            options: Optional[RequestConfig] = None,
+            **kwargs,
+    ):
         if not data:
             data = {}
         if not options:
@@ -128,7 +132,7 @@ class MoySkladHttpClient:
         }
 
         if not options.ignore_request_body:
-            if http_method == HTTPMethod.GET:
+            if http_method == HTTPMethod.GET and isinstance(data, dict):
                 request_payload['params'].update(data)
             elif http_method in JSON_REQUEST_TYPES:
                 request_payload['json'] = data

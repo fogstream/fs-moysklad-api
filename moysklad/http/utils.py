@@ -22,9 +22,16 @@ class HTTPMethod(Enum):
 class ApiResponse:
     def __init__(self, response: Response, json_response: dict) -> None:
         self.data = json_response
-        self.context = json_response.get('context')
-        self.meta = json_response.get('meta')
-        self.rows = json_response.get('rows')
+
+        if isinstance(json_response, dict):
+            self.context = json_response.get('context')
+            self.meta = json_response.get('meta')
+            self.rows = json_response.get('rows')
+        else:
+            self.context = None
+            self.meta = None
+            self.rows = json_response
+
         self.response = response
         self.headers = response.headers
 
