@@ -20,16 +20,20 @@ JSON_REQUEST_TYPES = (HTTPMethod.POST, HTTPMethod.PUT, HTTPMethod.DELETE)
 
 
 class MoySkladHttpClient:
-    _endpoint = 'https://online.moysklad.ru/api/remap/1.1/'
-    _pos_endpoint = 'https://online.moysklad.ru/api/posap/1.0/'
-
-    def __init__(self, login: str, password: str,
-                 pos_token: Optional[str] = None) -> None:
+    def __init__(
+            self, login: str, password: str,
+            pos_token: Optional[str] = None,
+            version: str = '1.2',
+            pos_version: str = '1.0',
+    ) -> None:
         self._login = login
         self._password = password
         self._pos_token = pos_token
         self._pre_request_sleep_time: float = 200
         self._proxies = None
+
+        self._endpoint = f'https://online.moysklad.ru/api/remap/{version}/'
+        self._pos_endpoint = f'https://online.moysklad.ru/api/posap/{pos_version}/'
 
     def set_pos_token(self, pos_token: str) -> None:
         self._pos_token = pos_token
