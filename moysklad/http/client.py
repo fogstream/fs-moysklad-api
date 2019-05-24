@@ -116,11 +116,16 @@ class MoySkladHttpClient:
             endpoint = self._pos_endpoint
 
         auth = HTTPBasicAuth(self._login, password)
+
         headers = {}
         if options.format_millisecond:
             headers['X-Lognex-Format-Millisecond'] = 'true'
+        if options.disable_webhooks_dispatch:
+            headers['X-Lognex-WebHook-Disable'] = 'true'
         if options.debug_rate_limit:
             headers.update(DEBUG_RATE_HEADERS)
+        if options.custom_headers:
+            headers.update(options.custom_headers)
 
         query = kwargs.get('query') or Query()
         request_payload = {
