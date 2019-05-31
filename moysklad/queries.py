@@ -7,7 +7,7 @@ from typing import Optional, Union
 from moysklad.utils import get_time_string
 
 
-MAX_LIST_LIMIT = 100
+MAX_LIST_LIMIT = 1000
 
 
 class Query:
@@ -171,7 +171,7 @@ class Expand(BaseQuery):
 
 
 class Select:
-    def __init__(self, limit=25, offset=0,
+    def __init__(self, limit=100, offset=0,
                  updated_from: Optional[Union[datetime, str]] = None,
                  updated_to: Optional[Union[datetime, str]] = None,
                  updated_by: Optional[str] = None):
