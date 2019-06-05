@@ -6,7 +6,6 @@ from typing import Optional, Union
 
 from moysklad.utils import get_time_string
 
-
 MAX_LIST_LIMIT = 1000
 
 
@@ -174,10 +173,12 @@ class Select:
     def __init__(self, limit=100, offset=0,
                  updated_from: Optional[Union[datetime, str]] = None,
                  updated_to: Optional[Union[datetime, str]] = None,
-                 updated_by: Optional[str] = None):
+                 updated_by: Optional[str] = None,
+                 additional: Optional[dict] = None):
         self._limit = limit if limit <= MAX_LIST_LIMIT else MAX_LIST_LIMIT
         self._offset = offset
         self._updated_by = updated_by
+        self._additional = additional or {}
 
         if isinstance(updated_from, datetime):
             self._updated_from = get_time_string(updated_from)
@@ -199,10 +200,12 @@ class Select:
 
     @property
     def spec(self):
-        return {
+        params = {
             'limit': self._limit,
             'offset': self._offset,
             'updatedFrom': self._updated_from,
             'updatedTo': self._updated_to,
             'updatedBy': self._updated_by,
         }
+        params.update(self._additional)
+        return params
