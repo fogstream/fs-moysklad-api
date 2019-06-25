@@ -15,7 +15,6 @@ from ..exceptions import (
 from ..queries import Query
 from .utils import DEBUG_RATE_HEADERS, ApiResponse, HTTPMethod, RequestConfig
 
-
 JSON_REQUEST_TYPES = (HTTPMethod.POST, HTTPMethod.PUT, HTTPMethod.DELETE)
 
 
@@ -37,6 +36,14 @@ class MoySkladHttpClient:
 
     def set_pos_token(self, pos_token: str) -> None:
         self._pos_token = pos_token
+
+    @property
+    def endpoint(self):
+        return self._endpoint
+
+    @property
+    def pos_endpoint(self):
+        return self._pos_endpoint
 
     def get(self, method: str,
             data: Union[dict, list] = None,
