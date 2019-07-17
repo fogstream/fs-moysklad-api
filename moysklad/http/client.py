@@ -3,7 +3,7 @@ from time import sleep
 from typing import Optional, Union
 from urllib.parse import urljoin
 
-from requests import Request, RequestException, Session
+from requests import HTTPError, Request, Session
 from requests.auth import HTTPBasicAuth
 
 from ..exceptions import (
@@ -14,6 +14,7 @@ from ..exceptions import (
 )
 from ..queries import Query
 from .utils import DEBUG_RATE_HEADERS, ApiResponse, HTTPMethod, RequestConfig
+
 
 JSON_REQUEST_TYPES = (HTTPMethod.POST, HTTPMethod.PUT, HTTPMethod.DELETE)
 
@@ -164,21 +165,10 @@ class MoySkladHttpClient:
                 proxies=self._proxies,
             )
             res.raise_for_status()
-
-            if http_method == HTTPMethod.DELETE:
-                return None
-
-            if not options.follow_redirects and res.is_redirect:
-                return res.headers.get('location', '')
-
-            try:
-                json_response = res.json()
-                return ApiResponse(res, json_response)
-            except JSONDecodeError as e:
-                raise ResponseParseException(e, res)
-        except RequestException as e:
-            res = e.response
+        except HTTPError as exc:
+            res = exc.response
             e = RequestFailedException(res)
+
             try:
                 res_json = res.json()
                 is_list = isinstance(res_json, list)
@@ -188,4 +178,16 @@ class MoySkladHttpClient:
             except JSONDecodeError:
                 pass
             finally:
-                raise e
+                raise e from exc
+
+        if http_method == HTTPMethod.DELETE:
+            return None
+
+        if not options.follow_redirects and res.is_redirect:
+            return res.headers.get('location', '')
+
+        try:
+            json_response = res.json()
+            return ApiResponse(res, json_response)
+        except JSONDecodeError as exc:
+            raise ResponseParseException(exc, res)

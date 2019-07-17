@@ -4,9 +4,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 from typing import Optional, Union
 
-from moysklad.utils import get_time_string
-
-MAX_LIST_LIMIT = 1000
+from .utils import get_time_string
 
 
 class Query:
@@ -170,12 +168,17 @@ class Expand(BaseQuery):
 
 
 class Select:
-    def __init__(self, limit=100, offset=0,
-                 updated_from: Optional[Union[datetime, str]] = None,
-                 updated_to: Optional[Union[datetime, str]] = None,
-                 updated_by: Optional[str] = None,
-                 additional: Optional[dict] = None):
-        self._limit = limit if limit <= MAX_LIST_LIMIT else MAX_LIST_LIMIT
+    MAX_LIST_LIMIT = 1000
+
+    def __init__(
+            self,
+            limit: int = 100, offset: int = 0,
+            updated_from: Optional[Union[datetime, str]] = None,
+            updated_to: Optional[Union[datetime, str]] = None,
+            updated_by: Optional[str] = None,
+            additional: Optional[dict] = None,
+    ):
+        self._limit = limit if limit <= self.MAX_LIST_LIMIT else self.MAX_LIST_LIMIT
         self._offset = offset
         self._updated_by = updated_by
         self._additional = additional or {}
