@@ -190,4 +190,6 @@ class MoySkladHttpClient:
             json_response = res.json()
             return ApiResponse(res, json_response)
         except JSONDecodeError as exc:
+            if res.headers['Content-Type'] == 'application/octet-stream':
+                return res
             raise ResponseParseException(exc, res)
