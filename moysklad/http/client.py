@@ -15,7 +15,6 @@ from ..exceptions import (
 from ..queries import Query
 from .utils import DEBUG_RATE_HEADERS, ApiResponse, HTTPMethod, RequestConfig
 
-
 JSON_REQUEST_TYPES = (HTTPMethod.POST, HTTPMethod.PUT, HTTPMethod.DELETE)
 
 
@@ -32,8 +31,8 @@ class MoySkladHttpClient:
         self._pre_request_sleep_time: float = 200
         self._proxies = None
 
-        self._endpoint = f'https://online.moysklad.ru/api/remap/{version}/'
-        self._pos_endpoint = f'https://online.moysklad.ru/api/posap/{pos_version}/'
+        self._endpoint = f'https://api.moysklad.ru/api/remap/{version}/'
+        self._pos_endpoint = f'https://api.moysklad.ru/api/posap/{pos_version}/'
 
     def set_pos_token(self, pos_token: str) -> None:
         self._pos_token = pos_token
@@ -125,7 +124,9 @@ class MoySkladHttpClient:
 
         auth = HTTPBasicAuth(self._login, password)
 
-        headers = {}
+        headers = {
+            'Accept-Encoding': 'gzip'
+        }
         if options.format_millisecond:
             headers['X-Lognex-Format-Millisecond'] = 'true'
         if options.disable_webhooks_dispatch:
