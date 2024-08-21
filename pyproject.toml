@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "moysklad"
+version = "0.5.2"
+description = "MoySklad API wrapper"
+authors = ["fadedDexofan <fadeddexofan@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+requests = "^2.32.3"
+PySocks = "^1.7.1"
+
+[tool.poetry.group.dev.dependencies]
+isort = "^5.13.2"
+pylint = "^3.2.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
